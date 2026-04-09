@@ -1,0 +1,16 @@
+{
+  "name": "portofolio-uiux",
+  "version": "1.0.0",
+  "description": "Professional UI/UX Designer Portfolio — Fuad Baharudin",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  },
+  "keywords": ["portfolio", "ui-ux", "design", "nodejs"],
+  "author": "Fuad Baharudin",
+  "license": "MIT"
+}
