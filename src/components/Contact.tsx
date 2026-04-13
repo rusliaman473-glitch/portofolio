@@ -72,9 +72,9 @@ const Contact = () => {
 
             <div className="contact-details">
               {[
-                { label: "Email", value: "aji@gmail.com", icon: "📧", href: "mailto:aji@gmail.com" },
-                { label: "WhatsApp", value: "088808918765", icon: "📱", href: "https://wa.me/6288808918765" },
-                { label: "Location", value: "Jakarta, Indonesia 🇮🇩", icon: "📍", href: "#" },
+                { label: "Email", value: "fuadbaharudin14@gmail.com", icon: "📧", href: "mailto:fuadbaharudin14@gmail.com" },
+                { label: "WhatsApp", value: "0888-0305-9891", icon: "📱", href: "https://wa.me/6288803059891" },
+                { label: "Location", value: "sidoarjo, jawa timur-indonesia", icon: "📍", href: "#" },
               ].map((item, i) => (
                 <a key={i} href={item.href} className="contact-detail-item">
                   <div className="detail-icon">{item.icon}</div>
