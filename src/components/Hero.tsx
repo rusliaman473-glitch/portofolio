@@ -5,14 +5,14 @@ import Image from "next/image";
 import { Briefcase, PaperPlaneTilt, RocketLaunch } from "@phosphor-icons/react";
 
 const Hero = () => {
-  const [counts, setCounts] = useState({ projects: 0, clients: 0, exp: 0 });
-  const [badgeText, setBadgeText] = useState("");
-  
   const phrases = [
     "✦ Available for new projects",
     "✦ Open to freelance work",
     "✦ Let's build something great",
   ];
+
+  const [counts, setCounts] = useState({ projects: 0, clients: 0, exp: 0 });
+  const [badgeText, setBadgeText] = useState(phrases[0]);
 
   useEffect(() => {
     // Counter Animation
@@ -37,8 +37,8 @@ const Hero = () => {
 
     // Typewriter effect
     let phraseIndex = 0;
-    let charIndex = 0;
-    let isDeleting = false;
+    let charIndex = phrases[0].length;
+    let isDeleting = true;
     let typingTimeout: NodeJS.Timeout;
 
     const type = () => {

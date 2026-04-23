@@ -1,85 +1,86 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useCallback } from "react";
 
 const CustomCursor = () => {
-  const [mounted, setMounted] = useState(false);
+  const cursorRef = useRef<HTMLDivElement>(null);
+  const followerRef = useRef<HTMLDivElement>(null);
+  const mousePos = useRef({ x: 0, y: 0 });
+  const followerPos = useRef({ x: 0, y: 0 });
+  const rafId = useRef<number>(0);
+
+  const animateFollower = useCallback(() => {
+    const follower = followerRef.current;
+    if (!follower) return;
+
+    followerPos.current.x += (mousePos.current.x - followerPos.current.x) * 0.12;
+    followerPos.current.y += (mousePos.current.y - followerPos.current.y) * 0.12;
+    follower.style.left = followerPos.current.x + "px";
+    follower.style.top = followerPos.current.y + "px";
+    rafId.current = requestAnimationFrame(animateFollower);
+  }, []);
 
   useEffect(() => {
-    setMounted(true);
-    const cursor = document.getElementById("cursor");
-    const follower = document.getElementById("cursorFollower");
+    const cursor = cursorRef.current;
+    const follower = followerRef.current;
     if (!cursor || !follower) return;
 
-    let mouseX = 0, mouseY = 0;
-    let followerX = 0, followerY = 0;
-
     const onMouseMove = (e: MouseEvent) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      cursor.style.left = mouseX + "px";
-      cursor.style.top = mouseY + "px";
+      mousePos.current.x = e.clientX;
+      mousePos.current.y = e.clientY;
+      cursor.style.left = e.clientX + "px";
+      cursor.style.top = e.clientY + "px";
     };
 
-    const animateFollower = () => {
-      followerX += (mouseX - followerX) * 0.12;
-      followerY += (mouseY - followerY) * 0.12;
-      follower.style.left = followerX + "px";
-      follower.style.top = followerY + "px";
-      requestAnimationFrame(animateFollower);
+    const onMouseOver = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      const isInteractive = target.closest(
+        "a, button, input, textarea, select, .project-card, .tool-card, .testimonial-card, [role='button']"
+      );
+
+      if (isInteractive) {
+        cursor.classList.add("hovered");
+        follower.classList.add("hovered");
+      } else {
+        cursor.classList.remove("hovered");
+        follower.classList.remove("hovered");
+      }
     };
 
-    document.addEventListener("mousemove", onMouseMove);
-    const frameId = requestAnimationFrame(animateFollower);
-
-    const onMouseEnter = () => {
-      cursor.classList.add("hovered");
-      follower.classList.add("hovered");
-    };
-    const onMouseLeave = () => {
-      cursor.classList.remove("hovered");
-      follower.classList.remove("hovered");
-    };
-
-    const targets = document.querySelectorAll(
-      "a, button, .project-card, .tool-card, .testimonial-card, input, textarea, select"
-    );
-    targets.forEach((el) => {
-      el.addEventListener("mouseenter", onMouseEnter);
-      el.addEventListener("mouseleave", onMouseLeave);
-    });
-
-    // Handle visibility when leaving window
     const hideCursors = () => {
       cursor.style.opacity = "0";
       follower.style.opacity = "0";
       document.body.classList.remove("custom-cursor-active");
     };
+
     const showCursors = () => {
       cursor.style.opacity = "1";
       follower.style.opacity = "1";
       document.body.classList.add("custom-cursor-active");
     };
 
+    document.addEventListener("mousemove", onMouseMove);
+    document.addEventListener("mouseover", onMouseOver);
     document.addEventListener("mouseleave", hideCursors);
     document.addEventListener("mouseenter", showCursors);
     document.body.classList.add("custom-cursor-active");
 
+    rafId.current = requestAnimationFrame(animateFollower);
+
     return () => {
       document.removeEventListener("mousemove", onMouseMove);
-      cancelAnimationFrame(frameId);
+      document.removeEventListener("mouseover", onMouseOver);
       document.removeEventListener("mouseleave", hideCursors);
       document.removeEventListener("mouseenter", showCursors);
       document.body.classList.remove("custom-cursor-active");
+      cancelAnimationFrame(rafId.current);
     };
-  }, []);
-
-  if (!mounted) return null;
+  }, [animateFollower]);
 
   return (
     <>
-      <div className="cursor" id="cursor"></div>
-      <div className="cursor-follower" id="cursorFollower"></div>
+      <div className="cursor" ref={cursorRef}></div>
+      <div className="cursor-follower" ref={followerRef}></div>
     </>
   );
 };
