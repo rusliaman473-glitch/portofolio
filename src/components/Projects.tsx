@@ -7,10 +7,10 @@ import { SquaresFour, Clock, Users, FigmaLogo, Globe } from "@phosphor-icons/rea
 const projects = [
   {
     id: "fintech",
-    title: "NovaPay — Digital Banking Experience",
-    desc: "End-to-end redesign of a digital payment platform serving 2M+ users. Reduced friction in the onboarding flow by 65% through targeted UX research and iterative testing.",
-    image: "/images/project_fintech.png",
-    tags: ["Fintech", "Mobile App", "iOS & Android"],
+    title: "Simvent — Platform Tiketing",
+    desc: "A comprehensive SaaS platform for event organizers to manage ticket sales and attendees efficiently. Features real-time dashboard and seamless booking flow.",
+    image: "/images/simvent.jpg",
+    tags: ["SaaS", "Ticketing System", "Web Platform"],
     stats: [
       { icon: <Clock size={16} />, text: "12 weeks" },
       { icon: <Users size={16} />, text: "2M+ users impacted" },
@@ -27,11 +27,11 @@ const projects = [
     featured: false,
   },
   {
-    id: "health",
-    title: "Zenflow — Wellness & Mindfulness App",
-    desc: "Designed a calming wellness companion app focused on accessibility and habit formation. Achieved top rankings in wellness category.",
-    image: "/images/project_health.png",
-    tags: ["Health", "Mobile App"],
+    id: "fintech-khasanah",
+    title: "KhasanahPay — Digital Finance Transformation",
+    desc: "A modern financial management platform designed for Islamic boarding schools (Pesantren), focusing on transparency, efficiency, and integrated payment systems.",
+    image: "/images/khasanahpay.jpg",
+    tags: ["Fintech", "Transparency", "Web Platform"],
     stats: [{ icon: <Clock size={16} />, text: "10 weeks" }],
     featured: false,
   },
